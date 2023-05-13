@@ -118,10 +118,13 @@ if(isset($_GET['delete'])){
    <form action="" method="POST" enctype="multipart/form-data">
       <h3>thêm sản phẩm</h3>
       <input type="text" required placeholder="Tên sản phẩm" name="name" maxlength="100" class="box">
-      <!-- thêm -->
-      <input type="text" required placeholder="enter product description" name="description" maxlength="300" class="box">
-      <!-- <input type="text" required placeholder="enter id_cate" name="id_cate" maxlength="2" class="box"> -->
-      <!-- end -->
+      <!-- <input type="text" required placeholder="enter product description" name="description" maxlength="300" class="box"> -->
+      <select name="description" class="box" required>
+      <option value="" disabled selected>Chọn size --</option>
+      <option value="Size nhỏ" >Size nhỏ</option>
+      <option value="Size vừa" >Size vừa</option>
+      <option value="Size lớn" >Size lớn</option>
+      </select>
       <input type="number" min="0" max="9999999999" required placeholder="Giá tiền  / $" name="price" onkeypress="if(this.value.length == 10) return false;" class="box">
       <select name="category" class="box" required>
       <option value="" disabled selected>Chọn thể loại --</option>
