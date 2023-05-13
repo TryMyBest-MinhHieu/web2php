@@ -10,7 +10,7 @@ $module = "PRODU";
 $perm_id = 6;
 
 if($_AD->check($module,$perm_id) === false){
-   exit("No access");
+   exit("Tài khoản không có quyền sử dụng chức năng này");
 }
 
 if(!isset($admin_id)){
@@ -27,8 +27,6 @@ if(isset($_POST['update'])){
    //thêm
    $description = $_POST['description'];
    $description = filter_var($description, FILTER_SANITIZE_STRING);
-   $id_cate = $_POST['id_cate'];
-   $id_cate = filter_var($id_cate, FILTER_SANITIZE_STRING);
    //end
 
    $price = $_POST['price'];
@@ -36,9 +34,14 @@ if(isset($_POST['update'])){
    $category = $_POST['category'];
    $category = filter_var($category, FILTER_SANITIZE_STRING);
 
+   $select_id_cate = $conn->prepare("SELECT `id_cate` FROM `category` WHERE namecate = ?");
+   $select_id_cate->execute([$category]);
+
+   $fetch_id_cate = $select_id_cate->fetch();
+
    // thêm
    $update_product = $conn->prepare("UPDATE `products` SET name = ?,description = ?, id_cate = ?, category = ?, price = ? WHERE id = ?");
-   $update_product->execute([$name,$description, $id_cate, $category, $price, $pid]);
+   $update_product->execute([$name,$description, $fetch_id_cate['id_cate'], $category, $price, $pid]);
    // end
 
    $message[] = 'product updated!';
@@ -108,8 +111,6 @@ if(isset($_POST['update'])){
       <!-- //thêm -->
       <span>update description</span>
       <input type="text" required placeholder="enter product description" name="description" maxlength="300" class="box" value="<?= $fetch_products['description']; ?>">
-      <span>update id_cate</span>
-      <input type="text" required placeholder="enter id_cate" name="id_cate" maxlength="2" class="box" value="<?= $fetch_products['id_cate']; ?>">
       <!-- //end -->
 
       <span>update price</span>
@@ -123,7 +124,7 @@ if(isset($_POST['update'])){
             if ($select_category->rowCount() > 0) {
                while ($fetch_category = $select_category->fetch(PDO::FETCH_ASSOC)) {
          ?>
-         <option value=<?= $fetch_category["id_cate"]; ?>><?= $fetch_category["namecate"]; ?></option>
+         <option value=<?= $fetch_category["namecate"]; ?>><?= $fetch_category["namecate"]; ?></option>
          <?php
                }
             }

@@ -9,8 +9,14 @@ $admin_id = $_SESSION['admin']['id'];
 $module = "AUTH";
 $perm_id = 10;
 
+$valid = isset($_SESSION["admin"]["permissions"][$module]) ;
+
+if($valid === false){
+   exit("Tài khoản không có quyền sử dụng chức năng này");
+}
+
 if ($_AD->check($module, $perm_id) === false) {
-    exit("No access");
+    exit("Tài khoản không có quyền sử dụng chức năng này");
 }
 
 if (!isset($admin_id)) {

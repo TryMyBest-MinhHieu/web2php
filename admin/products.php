@@ -11,8 +11,14 @@ $admin_id = $_SESSION['admin']['id'];
 $module = "PRODU";
 $perm_id = 5;
 
+$valid = isset($_SESSION["admin"]["permissions"][$module]) ;
+
+if($valid === false){
+   exit("Tài khoản không có quyền sử dụng chức năng này");
+}
+
 if($_AD->check($module,$perm_id) === false){
-   exit("No access");
+   exit("Tài khoản không có quyền sử dụng chức năng này");
 }
 
 if(!isset($admin_id)){
@@ -49,10 +55,10 @@ if(isset($_POST['add_product'])){
    $select_products = $conn->prepare("SELECT * FROM `products` WHERE name = ?");
    $select_products->execute([$name]);
 
-   $select_cata = $conn->prepare("SELECT `id_cate` FROM `category` WHERE namecate = ?");
-   $select_cata->execute([$category]);
+   $select_id_cate = $conn->prepare("SELECT `id_cate` FROM `category` WHERE namecate = ?");
+   $select_id_cate->execute([$category]);
 
-   $fetch_cata = $select_cata->fetch();
+   $fetch_id_cate = $select_id_cate->fetch();
 
    if($select_products->rowCount() > 0){
       $message[] = 'product name already exists!';
@@ -63,7 +69,7 @@ if(isset($_POST['add_product'])){
          move_uploaded_file($image_tmp_name, $image_folder);
 
          $insert_product = $conn->prepare("INSERT INTO `products`(name, description, id_cate, category, price, image) VALUES(?,?,?,?,?,?)");
-         $insert_product->execute([$name, $description, $fetch_cata['id_cate'], $category, $price, $image]);
+         $insert_product->execute([$name, $description, $fetch_id_cate['id_cate'], $category, $price, $image]);
 
          $message[] = 'new product added!';
       }
