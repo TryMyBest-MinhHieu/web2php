@@ -20,7 +20,6 @@ if(isset($message)){
       <nav class="navbar">
          <a href="home.php">Trang chủ</a>
          <a href="products.php">Sản phẩm</a>
-         <a href="category.php">Loại</a>
          <a href="placed_orders.php">Hóa Đơn</a>
          <a href="admin_accounts.php">Quản trị</a>
          <a href="users_accounts.php">Khách hàng</a>

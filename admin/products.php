@@ -11,25 +11,25 @@ $admin_id = $_SESSION['admin']['id'];
 $module = "PRODU";
 $perm_id = 5;
 
-$valid = isset($_SESSION["admin"]["permissions"][$module]) ;
+$valid = isset($_SESSION["admin"]["permissions"][$module]);
 
-if($valid === false){
+if ($valid === false) {
    exit("Tài khoản không có quyền sử dụng chức năng này");
 }
 
-if($_AD->check($module,$perm_id) === false){
+if ($_AD->check($module, $perm_id) === false) {
    exit("Tài khoản không có quyền sử dụng chức năng này");
 }
 
-if(!isset($admin_id)){
+if (!isset($admin_id)) {
    header('location:admin_login.php');
 }
 
-if(!isset($admin_id)){
+if (!isset($admin_id)) {
    header('location:admin_login.php');
 };
 
-if(isset($_POST['add_product'])){
+if (isset($_POST['add_product'])) {
 
    $name = $_POST['name'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
@@ -39,7 +39,7 @@ if(isset($_POST['add_product'])){
 
    $price = $_POST['price'];
    $price = filter_var($price, FILTER_SANITIZE_STRING);
-   
+
    $category = $_POST['category'];
    $category = filter_var($category, FILTER_SANITIZE_STRING);
 
@@ -47,7 +47,7 @@ if(isset($_POST['add_product'])){
    $image = filter_var($image, FILTER_SANITIZE_STRING);
    $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
-   $image_folder = '../project images/'.$image;
+   $image_folder = '../project images/' . $image;
 
    $select_products = $conn->prepare("SELECT * FROM `products` WHERE name = ?");
    $select_products->execute([$name]);
@@ -57,12 +57,12 @@ if(isset($_POST['add_product'])){
 
    $fetch_id_cate = $select_id_cate->fetch();
 
-   if($select_products->rowCount() > 0){
+   if ($select_products->rowCount() > 0) {
       $message[] = 'product name already exists!';
-   }else{
-      if($image_size > 2000000){
+   } else {
+      if ($image_size > 2000000) {
          $message[] = 'image size is too large';
-      }else{
+      } else {
          move_uploaded_file($image_tmp_name, $image_folder);
 
          $insert_product = $conn->prepare("INSERT INTO `products`(name, description, id_cate, category, price, image) VALUES(?,?,?,?,?,?)");
@@ -70,30 +70,28 @@ if(isset($_POST['add_product'])){
 
          $message[] = 'new product added!';
       }
-
    }
-
 }
 
-if(isset($_GET['delete'])){
+if (isset($_GET['delete'])) {
 
    $delete_id = $_GET['delete'];
    $delete_product_image = $conn->prepare("SELECT * FROM `products` WHERE id = ?");
    $delete_product_image->execute([$delete_id]);
    $fetch_delete_image = $delete_product_image->fetch(PDO::FETCH_ASSOC);
-   unlink('../uploaded_img/'.$fetch_delete_image['image']);
+   unlink('../uploaded_img/' . $fetch_delete_image['image']);
    $delete_product = $conn->prepare("DELETE FROM `products` WHERE id = ?");
    $delete_product->execute([$delete_id]);
    $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE pid = ?");
    $delete_cart->execute([$delete_id]);
    header('location:products.php');
-
 }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,87 +105,91 @@ if(isset($_GET['delete'])){
    <link rel="stylesheet" href="../css/admin_style.css">
 
 </head>
+
 <body>
 
-<?php include '../components/admin_header.php' ?>
+   <?php include '../components/admin_header.php' ?>
 
-<!-- add products section starts  -->
+   <!-- add products section starts  -->
 
-<section class="add-products">
+   <section class="add-products">
 
-   <form action="" method="POST" enctype="multipart/form-data">
-      <h3>thêm sản phẩm</h3>
-      <input type="text" required placeholder="Tên sản phẩm" name="name" maxlength="100" class="box">
-      <!-- <input type="text" required placeholder="enter product description" name="description" maxlength="300" class="box"> -->
-      <select name="description" class="box" required>
-      <option value="" disabled selected>Chọn size --</option>
-      <option value="Size nhỏ" >Size nhỏ</option>
-      <option value="Size vừa" >Size vừa</option>
-      <option value="Size lớn" >Size lớn</option>
-      </select>
-      <input type="number" min="0" max="9999999999" required placeholder="Giá tiền  / $" name="price" onkeypress="if(this.value.length == 10) return false;" class="box">
-      <select name="category" class="box" required>
-      <option value="" disabled selected>Chọn thể loại --</option>
-         <?php 
-            $select_category = $conn->prepare("SELECT * FROM `category`");
-            $select_category->execute();
-            if ($select_category->rowCount() > 0) {
-               while ($fetch_category = $select_category->fetch(PDO::FETCH_ASSOC)) {
-         ?>
-         <option value=<?= $fetch_category["namecate"]; ?>><?= $fetch_category["namecate"]; ?></option>
-         <?php
+      <form action="" method="POST" enctype="multipart/form-data">
+         <h3>thêm sản phẩm</h3>
+         <input type="text" required placeholder="Tên sản phẩm" name="name" maxlength="100" class="box">
+         <!-- <input type="text" required placeholder="enter product description" name="description" maxlength="300" class="box"> -->
+         <select name="description" class="box" required>
+            <option value="" disabled selected>Chọn size --</option>
+            <option value="Size nhỏ">Size nhỏ</option>
+            <option value="Size vừa">Size vừa</option>
+            <option value="Size lớn">Size lớn</option>
+         </select>
+         <input type="number" min="0" max="9999999999" required placeholder="Giá tiền  / $" name="price" onkeypress="if(this.value.length == 10) return false;" class="box">
+         <div class="box   ">
+            <select name="category" class="box" required>
+               <option value="" disabled selected>Chọn thể loại --</option>
+               <?php
+               $select_category = $conn->prepare("SELECT * FROM `category`");
+               $select_category->execute();
+               if ($select_category->rowCount() > 0) {
+                  while ($fetch_category = $select_category->fetch(PDO::FETCH_ASSOC)) {
+               ?>
+                     <option value=<?= $fetch_category["namecate"]; ?>><?= $fetch_category["namecate"]; ?></option>
+               <?php
+                  }
                }
-            }
+               ?>
+            </select>
+            <strong><a href="category.php">Thêm/Xóa thể loại</a></strong>
+         </div>
+
+         <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp" required>
+         <input type="submit" value="add product" name="add_product" class="btn">
+      </form>
+
+   </section>
+
+   <!-- add products section ends -->
+
+   <!-- show products section starts  -->
+
+   <section class="show-products" style="padding-top: 0;">
+
+      <div class="box-container">
+
+         <?php
+         $show_products = $conn->prepare("SELECT * FROM `products`");
+         $show_products->execute();
+         if ($show_products->rowCount() > 0) {
+            while ($fetch_products = $show_products->fetch(PDO::FETCH_ASSOC)) {
          ?>
-      </select>
-
-      <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp" required>
-      <input type="submit" value="add product" name="add_product" class="btn">
-   </form>
-
-</section>
-
-<!-- add products section ends -->
-
-<!-- show products section starts  -->
-
-<section class="show-products" style="padding-top: 0;">
-
-   <div class="box-container">
-
-   <?php
-      $show_products = $conn->prepare("SELECT * FROM `products`");
-      $show_products->execute();
-      if($show_products->rowCount() > 0){
-         while($fetch_products = $show_products->fetch(PDO::FETCH_ASSOC)){  
-   ?>
-   <div class="box">
-      <img src="../project images/<?= $fetch_products['image']; ?>" alt="">
-      <div class="flex">
-         <div class="price"><span>$</span><?= $fetch_products['price']; ?><span>/-</span></div>
-         <div class="category"><?= $fetch_products['category']; ?></div>
-      </div>
-      <div class="name"><?= $fetch_products['name']; ?></div>
-      <!-- thêm -->
-      <div class="description"><?= $fetch_products['description']; ?></div>
-      <!-- end -->
-      <div class="flex-btn">
-         <a href="update_product.php?update=<?= $fetch_products['id']; ?>" class="option-btn">update</a>
-         <a href="products.php?delete=<?= $fetch_products['id']; ?>" class="delete-btn" onclick="return confirm('delete this product?');">delete</a>
-      </div>
-   </div>
-   <?php
+               <div class="box">
+                  <img src="../project images/<?= $fetch_products['image']; ?>" alt="">
+                  <div class="flex">
+                     <div class="price"><span>$</span><?= $fetch_products['price']; ?><span>/-</span></div>
+                     <div class="category"><?= $fetch_products['category']; ?></div>
+                  </div>
+                  <div class="name"><?= $fetch_products['name']; ?></div>
+                  <!-- thêm -->
+                  <div class="description"><?= $fetch_products['description']; ?></div>
+                  <!-- end -->
+                  <div class="flex-btn">
+                     <a href="update_product.php?update=<?= $fetch_products['id']; ?>" class="option-btn">update</a>
+                     <a href="products.php?delete=<?= $fetch_products['id']; ?>" class="delete-btn" onclick="return confirm('delete this product?');">delete</a>
+                  </div>
+               </div>
+         <?php
+            }
+         } else {
+            echo '<p class="empty">no products added yet!</p>';
          }
-      }else{
-         echo '<p class="empty">no products added yet!</p>';
-      }
-   ?>
+         ?>
 
-   </div>
+      </div>
 
-</section>
+   </section>
 
-<!-- show products section ends -->
+   <!-- show products section ends -->
 
 
 
@@ -198,8 +200,9 @@ if(isset($_GET['delete'])){
 
 
 
-<!-- custom js file link  -->
-<script src="../js/admin_script.js"></script>
+   <!-- custom js file link  -->
+   <script src="../js/admin_script.js"></script>
 
 </body>
+
 </html>

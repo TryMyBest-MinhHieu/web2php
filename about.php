@@ -43,7 +43,7 @@ if (isset($_SESSION['user_id'])) {
 
    <div class="heading">
       <h3>Thông tin</h3>
-      <p><a href="home.php">Trang trủ</a> <span> / Thông tin</span></p>
+      <p><a href="home.php">Trang chủ</a> <span> / Thông tin</span></p>
    </div>
 
    <section class="about">
@@ -109,33 +109,32 @@ if (isset($_SESSION['user_id'])) {
          <div class="swiper-wrapper">
 
             <div class="swiper-slide slide">
-               <img src="images/pic-1.png" alt="">
+               <img src="images/CatChef.jpg" alt="">
+               <p></p>
+               <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+               </div>
+               <h3>Chef cat</h3>
+            </div>
+
+            <div class="swiper-slide slide">
+               <img src="images/begula.jpg" alt="">
                <p></p>
                <div class="stars">
                   <i class="fas fa-star"></i>
                   <i class="fas fa-star"></i>
                   <i class="fas fa-star"></i>
                   <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
+                  <i class="fas fa-star"></i>
                </div>
-               <h3>AAAA</h3>
+               <h3>Begula-Hecker cat !</h3>
             </div>
 
             <div class="swiper-slide slide">
-               <img src="images/pic-2.png" alt="">
-               <p></p>
-               <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-               </div>
-               <h3>BBB</h3>
-            </div>
-
-            <div class="swiper-slide slide">
-               <img src="images/pic-3.png" alt="">
+               <img src="images/smude.png" alt="">
                <p></p>
                <div class="stars">
                   <i class="fas fa-star"></i>
