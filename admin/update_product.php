@@ -24,10 +24,8 @@ if(isset($_POST['update'])){
    $name = $_POST['name'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
 
-   //thêm
    $description = $_POST['description'];
    $description = filter_var($description, FILTER_SANITIZE_STRING);
-   //end
 
    $price = $_POST['price'];
    $price = filter_var($price, FILTER_SANITIZE_STRING);
@@ -39,10 +37,8 @@ if(isset($_POST['update'])){
 
    $fetch_id_cate = $select_id_cate->fetch();
 
-   // thêm
    $update_product = $conn->prepare("UPDATE `products` SET name = ?,description = ?, id_cate = ?, category = ?, price = ? WHERE id = ?");
    $update_product->execute([$name,$description, $fetch_id_cate['id_cate'], $category, $price, $pid]);
-   // end
 
    $message[] = 'product updated!';
 
@@ -51,7 +47,7 @@ if(isset($_POST['update'])){
    $image = filter_var($image, FILTER_SANITIZE_STRING);
    $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
-   $image_folder = '../uploaded_img/'.$image;
+   $image_folder = '../project images/'.$image;
 
    if(!empty($image)){
       if($image_size > 2000000){
@@ -104,7 +100,7 @@ if(isset($_POST['update'])){
    <form action="" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
       <input type="hidden" name="old_image" value="<?= $fetch_products['image']; ?>">
-      <img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="">
+      <img src="../project images/<?= $fetch_products['image']; ?>" alt="">
       <span>update name</span>
       <input type="text" required placeholder="enter product name" name="name" maxlength="100" class="box" value="<?= $fetch_products['name']; ?>">
       

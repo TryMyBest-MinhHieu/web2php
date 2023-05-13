@@ -89,7 +89,7 @@ if(isset($_GET['delete'])){
 
    <form action="" method="POST" enctype="multipart/form-data">
       <h3>add category</h3>
-      <input type="text" required placeholder="enter category name" name="namecate" maxlength="100" class="box">
+      <input type="text" required placeholder="enter category name" name="namecate" maxlength="100" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="submit" value="add category" name="add_category" class="btn">
    </form>
 

@@ -34,15 +34,12 @@ if(isset($_POST['add_product'])){
    $name = $_POST['name'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
 
-   // thêm
    $description = $_POST['description'];
    $description = filter_var($description, FILTER_SANITIZE_STRING);
-   // $id_cate = $_POST['id_cate'];
-   // $id_cate = filter_var($id_cate, FILTER_SANITIZE_STRING);
-   //end
 
    $price = $_POST['price'];
    $price = filter_var($price, FILTER_SANITIZE_STRING);
+   
    $category = $_POST['category'];
    $category = filter_var($category, FILTER_SANITIZE_STRING);
 
@@ -50,7 +47,7 @@ if(isset($_POST['add_product'])){
    $image = filter_var($image, FILTER_SANITIZE_STRING);
    $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
-   $image_folder = '../uploaded_img/'.$image;
+   $image_folder = '../project images/'.$image;
 
    $select_products = $conn->prepare("SELECT * FROM `products` WHERE name = ?");
    $select_products->execute([$name]);
@@ -162,7 +159,7 @@ if(isset($_GET['delete'])){
          while($fetch_products = $show_products->fetch(PDO::FETCH_ASSOC)){  
    ?>
    <div class="box">
-      <img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="">
+      <img src="../project images/<?= $fetch_products['image']; ?>" alt="">
       <div class="flex">
          <div class="price"><span>$</span><?= $fetch_products['price']; ?><span>/-</span></div>
          <div class="category"><?= $fetch_products['category']; ?></div>

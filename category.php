@@ -94,7 +94,7 @@ include 'components/add_cart.php';
                   <input type="hidden" name="image" value="<?= $fetch_products['image']; ?>">
                   <a href="quick_view.php?pid=<?= $fetch_products['id']; ?>" class="fas fa-eye"></a>
                   <button type="submit" class="fas fa-shopping-cart" name="add_to_cart"></button>
-                  <img src="uploaded_img/<?= $fetch_products['image']; ?>" alt="">
+                  <img src="project images/<?= $fetch_products['image']; ?>" alt="">
                   <div class="name"><?= $fetch_products['name']; ?></div>
                   <div class="flex">
                      <div class="price"><span>$</span><?= $fetch_products['price']; ?></div>
