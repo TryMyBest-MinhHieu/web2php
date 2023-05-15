@@ -37,13 +37,13 @@ if(isset($_SESSION['user_id'])){
 <!-- header section ends -->
 
 <div class="heading">
-   <h3>orders</h3>
+   <h3>Đặt hàng</h3>
    <p><a href="html.php">Trang trủ</a> <span> / Đặt hàng</span></p>
 </div>
 
 <section class="orders">
 
-   <h1 class="title">your orders</h1>
+   <h1 class="title">Đơn đặt hàng</h1>
 
    <div class="box-container">
 
@@ -57,15 +57,15 @@ if(isset($_SESSION['user_id'])){
             while($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)){
    ?>
    <div class="box">
-      <p>placed on : <span><?= $fetch_orders['placed_on']; ?></span></p>
-      <p>name : <span><?= $fetch_orders['name']; ?></span></p>
-      <p>email : <span><?= $fetch_orders['email']; ?></span></p>
-      <p>number : <span><?= $fetch_orders['number']; ?></span></p>
-      <p>address : <span><?= $fetch_orders['address']; ?></span></p>
-      <p>payment method : <span><?= $fetch_orders['method']; ?></span></p>
-      <p>your orders : <span><?= $fetch_orders['total_products']; ?></span></p>
-      <p>total price : <span>$<?= $fetch_orders['total_price']; ?>/-</span></p>
-      <p> payment status : <span style="color:<?php if($fetch_orders['payment_status'] == 'pending'){ echo 'red'; }else{ echo 'green'; }; ?>"><?= $fetch_orders['payment_status']; ?></span> </p>
+      <p>Thời gian : <span><?= $fetch_orders['placed_on']; ?></span></p>
+      <p>Tên : <span><?= $fetch_orders['name']; ?></span></p>
+      <p>Email : <span><?= $fetch_orders['email']; ?></span></p>
+      <p>Điện thoại : <span><?= $fetch_orders['number']; ?></span></p>
+      <p>Địa chỉ : <span><?= $fetch_orders['address']; ?></span></p>
+      <p>Phương thức thanh toán : <span><?= $fetch_orders['method']; ?></span></p>
+      <p>Đơn hàng : <span><?= $fetch_orders['total_products']; ?></span></p>
+      <p>Tổng cộng : <span>$<?= $fetch_orders['total_price']; ?>/-</span></p>
+      <p>Trạng thái : <span style="color:<?php if($fetch_orders['payment_status'] == 'pending'){ echo 'red'; }else{ echo 'green'; }; ?>"><?= $fetch_orders['payment_status']; ?></span> </p>
    </div>
    <?php
       }
