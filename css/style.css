@@ -171,12 +171,12 @@ section{
    align-items: center;
    gap:1rem;
    justify-content: space-between;
-   background-color: var(--light-yellow);
+   background-color: rgb(252, 174, 174);
 }
 
 .message span{
    font-size: 2rem;
-   color:var(--black);
+   color: red;
 }
 
 .message i{
@@ -186,7 +186,7 @@ section{
 }
 
 .message i:hover{
-   color:var(--black);
+   color: white;
 }
 
 .empty{
@@ -931,6 +931,11 @@ section{
    border-bottom: 1px solid;
 }
 
+.error{
+    color: red;
+    font-size: 15px;
+    float:left;
+}
 
 .quick-view form .cat{
    margin-left: 0px;
@@ -1077,7 +1082,7 @@ section{
  }
 /* end hero area 2 */
 
-
+/*--error*/
 
 
 /* media queries  */
